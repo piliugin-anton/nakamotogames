@@ -153,14 +153,14 @@
 
 	function handleChangePost(id: number) {
 		const postFound = data.posts.find((post) => post.id === id) as IPost;
-  		const user = data.users.find((user: { id: number }) => user.id === postFound.userId) as IUser;
+  		const user = data.users.find((user: IUser) => user.id === postFound.userId) as IUser;
 
 		post = { ...postFound, user };
 	}
 
 	function setRandomPost() {
 		const randomPost: IPost = data.posts[Math.floor(Math.random() * data.posts.length)];
-  		const user = data.users.find((user: { id: number }) => user.id === randomPost.userId) as IUser;
+  		const user = data.users.find((user: IUser) => user.id === randomPost.userId) as IUser;
 
 		post = { ...randomPost, user };
 	}
