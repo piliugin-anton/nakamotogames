@@ -9,13 +9,13 @@
 	<div class="w-[530px] text-center">
 		<Badge text="Fashion" class="mb-[13px]" />
 		<h1 class="title capitalize font-bold text-[36px] text-white mb-[13px]">
-			{data.post.title}
+			{post.title}
 		</h1>
 		<h3 class="subtitle capitalize text-[12px] text-[#e5e5e5] mb-[13px]">
-			{data.post.body}
+			{post.body}
 		</h3>
 		<h2 class="title font-bold text-[12px] text-white">
-			By {data.post.user.name}
+			By {post.user.name}
 		</h2>
 	</div>
 </section>
@@ -81,13 +81,13 @@
 
 		<div class="flex justify-between items-center">
 			<div class="flex items-center">
-				<img src={userPhoto} alt={data.post.user.name} class="mr-[17px]" />
+				<img src={userPhoto} alt={post.user.name} class="mr-[17px]" />
 				<div class="author text-[12px] font-bold">
 					<span class="text-[#495057]">
 						By
 					</span>
 					<span class="text-[#343a40]">
-						{data.post.user.name}
+						{post.user.name}
 					</span>
 					<span class="block font-normal text-[#6c757d]">
 						Thinker & Designer
@@ -108,8 +108,10 @@
 
 		<swiper-container slides-per-view="3" speed="500" loop="true">
 			{#each data.posts as post}
-				<swiper-slide>
-					<div class="relative flex items-end w-[420px] h-[350px] rounded-[5px] bg-no-repeat bg-cover bg-[url('https://dummyimage.com/420x350/000/222')]">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<swiper-slide on:click={handleChangePost(post.id)}>
+					<div class="relative flex items-end w-[420px] h-[350px] rounded-[5px] cursor-pointer bg-no-repeat bg-cover bg-[url('https://dummyimage.com/420x350/000/222')]">
 						<Badge text="Fashion" class="absolute top-[20px] right-[20px]" />
 						<div class="px-[40px] pb-[42px] h-[60%]">
 							<span class="block datetime text-[12px] text-[#e5e5e5] mb-[15px]">
@@ -135,17 +137,32 @@
 	import Badge from "../components/badge.svelte";
 	import SocialNetworks from '../components/social-networks.svelte';
 	import userPhoto from '$lib/images/user-photo.png';
+	import type { PageData } from './$types';
+	import type { Post, IPost, IUser } from './+page';
 
 	/** @type {import('./$types').PageData} */
-	export let data;
+	export let data: PageData & { posts: IPost[], users: IUser[] };
 
 	const tags = ["Adventure", "Photo", "Design"];
+	let post: Post;
 
+	
+	setRandomPost();
 	// register Swiper custom elements
 	register();
 
-	function getRandomImage() {
-		return `bg-[url('https://loremflickr.com/420/350?_t=${Math.random()}')]`;
+	function handleChangePost(id: number) {
+		const postFound = data.posts.find((post) => post.id === id) as IPost;
+  		const user = data.users.find((user: { id: number }) => user.id === postFound.userId) as IUser;
+
+		post = { ...postFound, user };
+	}
+
+	function setRandomPost() {
+		const randomPost: IPost = data.posts[Math.floor(Math.random() * data.posts.length)];
+  		const user = data.users.find((user: { id: number }) => user.id === randomPost.userId) as IUser;
+
+		post = { ...randomPost, user };
 	}
 </script>
 
