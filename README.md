@@ -1,12 +1,38 @@
-# Репозиторий для тествого задания Frontend
+# create-svelte
 
-> Сделайте форк этого репозитория и выполняйте задание в нем
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
-## Задание
+## Creating a project
 
-Необходимо сверстать страничку в соответствии с [макетом](<https://www.figma.com/design/ljnpEabm960sMbHgBJcLFS/RUNO-Minimal-Blog-Template-(Community)?m=dev&node-id=0-1&t=iX911Ew02kDLrc7H-1>). Блок 'Related Posts' должен являть собой слайдер, для его реализации можете воспользоваться библиотекой [SwiperJS](https://swiperjs.com/). Заголовок, изображение и контент страницы должны быть случайными при каждой загрузке, данные брать [здесь](https://jsonplaceholder.typicode.com/) (если каких-то данных не хватает в API, пусть отображаются просто данные из макета). Посты для блока 'Related posts' так же должны быть из этого API. При клике на любой из них, он должен открыться вместо текущего. Обязательно наличие адаптивности, визуал адаптива необходимо продумать самостоятельно, главное чтобы макет выглядел достойно с любого девайса. Обязательно наличие ховеров на кликабельных элементах и анимация для выезжающего меню на мобильных устройствах.
+If you're seeing this, you've probably already done this step. Congrats!
 
-### В реализации вы должны использовать
+```bash
+# create a new project in the current directory
+npm create svelte@latest
 
-- [SvelteKit](https://kit.svelte.dev/)
-- [TailwindCSS](https://tailwindcss.com/)
+# create a new project in my-app
+npm create svelte@latest my-app
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
