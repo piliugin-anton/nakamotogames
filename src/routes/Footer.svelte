@@ -1,7 +1,7 @@
 <footer class="w-full">
-    <section class="bg-[#212529] px-[70px] py-[106px]">
-        <div class="flex justify-between items-start max-w-[1440px] mx-auto">
-            <div>
+    <section class="bg-[#212529] px-[24px] xl:px-[70px] py-[32px] xl:py-[106px]">
+        <div class="flex flex-wrap justify-between items-start max-w-[1440px] mx-auto">
+            <div class="mr-[24px] md:mr-0 mb-[24px] lg:mb-0">
                 <h3 class="text-white font-bold text-[18px] mb-[16px]">
                     Contact the Publisher
                 </h3>
@@ -13,7 +13,7 @@
                 </a>
             </div>
 
-            <div>
+            <div class="mr-[24px] md:mr-0 mb-[24px] lg:mb-0">
                 <h3 class="text-white font-bold text-[18px] mb-[16px]">
                     Explorate
                 </h3>
@@ -34,7 +34,7 @@
                 </a>
             </div>
 
-            <div>
+            <div class="mr-[24px] md:mr-0 mb-[24px] lg:mb-0">
                 <h3 class="text-white font-bold text-[18px] mb-[16px]">
                     Headquater
                 </h3>
@@ -54,8 +54,8 @@
         </div>
     </section>
 
-    <section class="text bg-[#343a40] h-[80px] text-[14px] text-[#e5e5e5]">
-        <div class="flex justify-between items-center max-w-[1440px] mx-auto h-full">
+    <section class="text bg-[#343a40] h-[80px] text-[14px] text-[#e5e5e5] px-[24px] xl:px-0">
+        <div class="flex flex-wrap justify-between items-center max-w-[1440px] mx-auto h-full">
             <span>
                 2021 | RUNO Publisher Studio
             </span>

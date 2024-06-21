@@ -32,7 +32,7 @@ export interface IUser {
 export type Post = IPost & { user: IUser };
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ fetch }) {
+export async function load() {
   const usersResponse = await fetch('https://jsonplaceholder.typicode.com/users');
   const users = await usersResponse.json() as IUser[];
   const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts');

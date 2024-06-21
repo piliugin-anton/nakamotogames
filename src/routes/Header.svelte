@@ -1,10 +1,10 @@
-<header class="absolute top-0 left-0 flex w-full h-[80px] justify-between bg-black/20 py-[29px] px-[70px]">
-	<a href="/" class="title font-bold no-underline text-[#f8f9fa] text-[20px] uppercase">
+<header class="absolute top-0 left-0 flex flex-col lg:flex-row w-full lg:h-[80px] justify-between bg-black/20 px-[24px] py-[29px] lg:px-[70px]">
+	<a href="/" class="title font-bold no-underline text-[#f8f9fa] text-[20px] uppercase mb-[16px] lg:mb-0">
 		Runo
 	</a>
 
-	<nav class="flex justify-center">
-		<ul class="relative p-0 flex justify-center align-center list-none border-r-[1px] px-[17px]">
+	<nav class="flex flex-wrap justify-center">
+		<ul class="relative p-0 flex justify-center align-center list-none lg:border-r-[1px] px-[17px] w-full mb-[24px] lg:w-auto lg:mb-0">
 			{#each pageLinks as link}
 				<li class="relative mr-[25px]" aria-current={$page.url.pathname === link.href ? 'page' : undefined}>
 					<a href={link.href} class="text-white text-[12px] font-bold">
@@ -14,7 +14,7 @@
 			{/each}
 		</ul>
 
-		<SocialNetworks class="border-r-[1px] px-[17px]" />
+		<SocialNetworks class="lg:border-r-[1px] px-[17px] shrink-0" />
 
 		<button type="button" class="px-[17px]">
 			<img src={search} alt="Search" />

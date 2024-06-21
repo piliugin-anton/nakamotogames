@@ -4,7 +4,7 @@
 </svelte:head>
 
 <section
-	class="bg-cover bg-bo-repeat bg-[url('$lib/images/home-bg.png')] flex justify-center items-center w-full h-[600px]"
+	class="bg-cover bg-bo-repeat bg-[url('$lib/images/home-bg.png')] flex justify-center items-end md:items-center w-full pb-[48px] px-[8px] md:pb-0 md:px-0 h-[600px]"
 >
 	<div class="w-[530px] text-center">
 		<Badge text="Fashion" class="mb-[13px]" />
@@ -21,9 +21,9 @@
 </section>
 
 <section
-	class="bg-white flex items-start px-[70px] py-[100px] max-w-[1080px] mx-auto"
+	class="bg-white flex flex-wrap md:flex-nowrap items-start px-[16px] py-[48px] md:px-[70px] md:py-[100px] max-w-[1080px] mx-auto"
 >
-	<div class="datetime flex items-center min-w-[168px] mr-[53px]">
+	<div class="datetime flex items-center min-w-[168px] mr-[53px] mb-[24px] md:mb-0">
 		<span class="font-bold text-[12px] text-[#495057]"> 20.06.2024 </span>
 		<hr class="w-[35px] mx-[8px]" />
 		<span class="font-bold text-[12px] text-[#495057]"> 4 minutes </span>
@@ -79,8 +79,8 @@
 			{/each}
 		</div>
 
-		<div class="flex justify-between items-center">
-			<div class="flex items-center">
+		<div class="flex flex-wrap justify-center sm:justify-between items-center">
+			<div class="flex items-center mb-[24px] sm:mb-0">
 				<img src={userPhoto} alt={post.user.name} class="mr-[17px]" />
 				<div class="author text-[12px] font-bold">
 					<span class="text-[#495057]">
@@ -95,25 +95,25 @@
 				</div>
 			</div>
 
-			<SocialNetworks dark />
+			<SocialNetworks class="shrink-0 w-full md:w-auto" dark />
 		</div>
 	</div>
 </section>
 
-<section class="bg-[#e5e5e5]/30 px-[70px] py-[100px]">
+<section class="bg-[#e5e5e5]/30 px-[24px] md:px-[70px] py-[32px] md:py-[100px]">
 	<div class="max-w-[1440px] mx-auto">
 		<h2 class="related-posts text-[18px] text-[#495057] font-bold mb-[50px]">
 			Related posts
 		</h2>
 
-		<swiper-container slides-per-view="3" speed="500" loop="true">
+		<swiper-container use:setSwiper init="false" speed="500" loop="true">
 			{#each data.posts as post}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-static-element-interactions -->
-				<swiper-slide on:click={handleChangePost(post.id)}>
-					<div class="relative flex items-end w-[420px] h-[350px] rounded-[5px] cursor-pointer bg-no-repeat bg-cover bg-[url('https://dummyimage.com/420x350/000/222')]">
+				<swiper-slide on:click={handleChangePost(post)}>
+					<div class="relative flex items-end w-[280px] md:w-[420px] h-[350px] rounded-[5px] cursor-pointer bg-no-repeat bg-cover bg-[url('https://dummyimage.com/420x350/000/222')]">
 						<Badge text="Fashion" class="absolute top-[20px] right-[20px]" />
-						<div class="px-[40px] pb-[42px] h-[60%]">
+						<div class="px-[40px] pb-[42px] h-[80%] md:h-[60%]">
 							<span class="block datetime text-[12px] text-[#e5e5e5] mb-[15px]">
 								20.06.2024
 							</span>
@@ -133,7 +133,7 @@
 
 <script lang="ts">
 	// import function to register Swiper custom elements
-	import { register } from 'swiper/element/bundle';
+	import { type SwiperContainer, register } from 'swiper/element/bundle';
 	import Badge from "../components/badge.svelte";
 	import SocialNetworks from '../components/social-networks.svelte';
 	import userPhoto from '$lib/images/user-photo.png';
@@ -143,26 +143,44 @@
 	/** @type {import('./$types').PageData} */
 	export let data: PageData & { posts: IPost[], users: IUser[] };
 
-	const tags = ["Adventure", "Photo", "Design"];
-	let post: Post;
+	const tags: string[] = ["Adventure", "Photo", "Design"];
+	let post: Post = setRandomPost();
+	let swiperEl: SwiperContainer;
 
-	
-	setRandomPost();
-	// register Swiper custom elements
-	register();
+	function setSwiper(node: SwiperContainer) {
+		swiperEl = node;
+		// swiper parameters
+		const swiperParams = {
+    		slidesPerView: 1,
+    		breakpoints: {
+      			1000: {
+        			slidesPerView: 2,
+      			},
+      			1420: {
+        			slidesPerView: 3,
+      			}
+    		}
+  		};
+		// now we need to assign all parameters to Swiper element
+		Object.assign(swiperEl, swiperParams);
 
-	function handleChangePost(id: number) {
-		const postFound = data.posts.find((post) => post.id === id) as IPost;
-  		const user = data.users.find((user: IUser) => user.id === postFound.userId) as IUser;
-
-		post = { ...postFound, user };
+		// and now initialize it
+		swiperEl.initialize();
 	}
 
-	function setRandomPost() {
+	register();
+
+	function handleChangePost(selectedPost: IPost): void {
+  		const user = data.users.find((user: IUser) => user.id === selectedPost.userId) as IUser;
+
+		post = { ...selectedPost, user };
+	}
+
+	function setRandomPost(): Post {
 		const randomPost: IPost = data.posts[Math.floor(Math.random() * data.posts.length)];
   		const user = data.users.find((user: IUser) => user.id === randomPost.userId) as IUser;
 
-		post = { ...randomPost, user };
+		return { ...randomPost, user };
 	}
 </script>
 
